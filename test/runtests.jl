@@ -1087,6 +1087,9 @@ end
 # 0.7
 @test contains("Hello, World!", r"World")
 
+# 0.7.0-DEV.3439
+@test length(Compat.IdDict(1=>2, 1.0=>3)) == 2
+
 # 0.7.0-DEV.3173
 @test invpermute!(permute!([1, 2], 2:-1:1), 2:-1:1) == [1, 2]
 

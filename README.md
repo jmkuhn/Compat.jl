@@ -283,6 +283,9 @@ Currently, the `@compat` macro supports the following syntaxes:
 
 * `ismatch(r::Regex, str::AbstractString)` is now `contains(str, r)` ([#24673]).
 
+* `Compat.IdDict` is an alias for `ObjectIdDict` on Julia 0.6, and
+  `IdDict{Any,Any}` on Julia 0.7 ([#25210]).
+
 * `ipermute!` is now `invpermute!` ([#25168]).
 
 ## New macros

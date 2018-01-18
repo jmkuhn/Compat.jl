@@ -1104,6 +1104,13 @@ end
     Base.contains(str::AbstractString, r::Regex) = ismatch(r, str)
 end
 
+# 0.7.0-DEV.3439
+@static if VERSION < v"0.7.0-DEV.3439"
+    const IdDict = Base.ObjectIdDict
+else
+    const IdDict = Base.IdDict{Any,Any}
+end
+
 @static if VERSION < v"0.7.0-DEV.3025"
     import Base: convert, ndims, getindex, size, length, eltype,
                  start, next, done, first, last
