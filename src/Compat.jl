@@ -1659,6 +1659,34 @@ else
     end
 end
 
+# https://github.com/JuliaLang/julia/pull/25872
+if VERSION < v"0.7.0-DEV.3734"
+    function IOBuffer(
+            data::AbstractVector{UInt8};
+            read::Union{Bool,Nothing}=nothing,
+            write::Union{Bool,Nothing}=nothing,
+            append::Union{Bool,Nothing}=nothing,
+            truncate::Union{Bool,Nothing}=nothing,
+            maxsize::Integer=typemax(Int),
+            sizehint::Union{Integer,Nothing}=nothing)
+        write    === nothing && (write    = false)
+        read     === nothing && (read     = !write)
+        truncate === nothing && (truncate = false)
+        append   === nothing && (append   = false)
+        if maxsize < 0
+            throw(ArgumentError("negative maxsize: $(maxsize)"))
+        end
+        if sizehint !== nothing
+            sizehint!(data, sizehint)
+        end
+        buf = Base.GenericIOBuffer(data, read, flags, true, append, Int(maxsize))
+        if truncate
+            buf.size = 0
+        end
+        return buf
+    end
+end
+
 include("deprecated.jl")
 
 end # module Compat
